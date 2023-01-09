@@ -1,18 +1,20 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="usersignup.aspx.cs" Inherits="eLibraryManagement.usersignup" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="userprofile.aspx.cs" Inherits="eLibraryManagement.userprofile" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8 mx-auto">
+            <!--Profile card-->
+            <div class="col-md-5">
                 <div class="card">
                     <div class="card-body">
                         <!-- User Registration icon -->
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <img width="110px" src="imgs/generaluser.png" />
+                                    <img width="100px" src="imgs/generaluser.png" />
                                 </center>
                             </div>
                         </div>
@@ -20,15 +22,20 @@
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <h4>Member Registration</h4>
+                                    <h4>Profile</h4>
+                                    <span>Account Status: </span>
+                                    <asp:Label class="badge badge-pill badge-info" ID="Label1" runat="server" Text="TBA"></asp:Label>
                                 </center>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col"><hr /></div>
+                            <div class="col">
+                                <hr />
+                            </div>
                         </div>
                         <!-- User Registration form -->
-                        <div class="row"> <!-- row 1 -->
+                        <div class="row">
+                            <!-- row 1 -->
                             <div class="col-md-6">
                                 <label>Full Name</label>
                                 <div class="form-group">
@@ -42,7 +49,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row"> <!-- row 2 -->
+                        <div class="row">
+                            <!-- row 2 -->
                             <div class="col-md-6">
                                 <label>Contact Number</label>
                                 <div class="form-group">
@@ -56,7 +64,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row"> <!-- row 3 -->
+                        <div class="row">
+                            <!-- row 3 -->
                             <div class="col">
                                 <label>Street Address</label>
                                 <div class="form-group">
@@ -64,7 +73,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row"> <!-- row 4 -->
+                        <div class="row">
+                            <!-- row 4 -->
                             <div class="col-md-4">
                                 <label>State</label>
                                 <div class="form-group">
@@ -87,35 +97,78 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row"> <!-- row 5 -->
-                            <div class="col-md-6">
+                        <div class="row">
+                            <!-- row 5 -->
+                            <div class="col-md-4">
                                 <label>Member ID</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox8" runat="server" placeholder="Member ID"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox8" runat="server" placeholder="Member ID" ReadOnly="True"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label>Password</label>
+                            <div class="col-md-4">
+                                <label>Old Password</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox9" runat="server" placeholder="Password" TextMode="Password"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox9" runat="server" placeholder="Old Password" ReadOnly="True"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>New Password</label>
+                                <div class="form-group">
+                                    <asp:TextBox CssClass="form-control" ID="TextBox10" runat="server" placeholder=" New Password" TextMode="Password"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
-                        <!-- User Registration buttom -->
+                        <!-- User Update button -->
                         <div class="row">
                             <div class="col">
                                 <br />
                                 <div class="form-group">
-                                    <input class="btn btn-info btn-block btn-lg" id="Button2" type="button" value="Sign Up" />
+                                    <input class="btn btn-info btn-block btn-lg" id="Button2" type="button" value="Update" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <a href="homepage.aspx"><< Back to Homepage</a><br /><br />
+                <a href="homepage.aspx"><< Back to Homepage</a><br />
+                <br />
             </div>
-        </div>
+
+            <!--Book History card-->
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Book Info icon -->
+                        <div class="row">
+                            <div class="col">
+                                <center>
+                                    <img width="100px" src="imgs/books.png" />
+                                </center>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <center>
+                                    <h4>Book History</h4>
+                                    <asp:Label class="badge badge-pill badge-info" ID="Label2" runat="server" Text="Book info"></asp:Label>
+                                </center>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <hr />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <asp:GridView class="table table-striped table-bordered" ID="GridView1" runat="server"></asp:GridView>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 
 
