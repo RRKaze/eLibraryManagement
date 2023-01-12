@@ -122,6 +122,8 @@ namespace eLibraryManagement
             Session["fullname"] = "";
             Session["role"] = "";
             Session["status"] = "";
+
+            Response.Redirect("homepage.aspx");
         }
     }
 }
