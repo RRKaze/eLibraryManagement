@@ -2246,6 +2246,12 @@
     <Content Include="fontawesome\webfonts\fa-v4compatibility.ttf" />
     <Content Include="fontawesome\webfonts\fa-v4compatibility.woff2" />
     <Content Include="homepage.aspx" />
+    <Content Include="imgs\b1.jpg" />
+    <Content Include="imgs\b2.jpg" />
+    <Content Include="imgs\b3.jpg" />
+    <Content Include="imgs\b4.jpg" />
+    <Content Include="imgs\b5.jpg" />
+    <Content Include="imgs\b6.jpg" />
     <Content Include="userlogin.aspx" />
     <Content Include="userprofile.aspx" />
     <Content Include="usersignup.aspx" />

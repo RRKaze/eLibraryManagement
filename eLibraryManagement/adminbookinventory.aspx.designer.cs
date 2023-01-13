@@ -15,13 +15,13 @@ namespace eLibraryManagement
     {
 
         /// <summary>
-        /// FileUpload1 control.
+        /// image_uploader control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
+        protected global::System.Web.UI.WebControls.FileUpload image_uploader;
 
         /// <summary>
         /// txt_bookID control.
@@ -31,15 +31,6 @@ namespace eLibraryManagement
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_bookID;
-
-        /// <summary>
-        /// validator_id control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator validator_id;
 
         /// <summary>
         /// btn_search control.
@@ -60,15 +51,6 @@ namespace eLibraryManagement
         protected global::System.Web.UI.WebControls.TextBox txt_title;
 
         /// <summary>
-        /// validator_title control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator validator_title;
-
-        /// <summary>
         /// dropdown_language control.
         /// </summary>
         /// <remarks>
@@ -78,22 +60,22 @@ namespace eLibraryManagement
         protected global::System.Web.UI.WebControls.DropDownList dropdown_language;
 
         /// <summary>
-        /// txt_author control.
+        /// dropdown_author control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_author;
+        protected global::System.Web.UI.WebControls.DropDownList dropdown_author;
 
         /// <summary>
-        /// txt_publisher control.
+        /// dropdown_publisher control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_publisher;
+        protected global::System.Web.UI.WebControls.DropDownList dropdown_publisher;
 
         /// <summary>
         /// txt_publishDate control.

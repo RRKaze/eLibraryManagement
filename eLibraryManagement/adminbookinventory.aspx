@@ -2,10 +2,15 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
-        $(document).ready(function ()
-        {
-            $(".table").prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable();
-        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imgview').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -27,7 +32,7 @@
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <img width="100px" src="imgs/books1.png" />
+                                    <img id="imgview" width="100px" src="imgs/books1.png" />
                                 </center>
                             </div>
                         </div>
@@ -35,7 +40,8 @@
                         <!-- row 1 -->
                         <div class="row">
                             <div class="col">
-                                <asp:FileUpload class="form-group" ID="FileUpload1" runat="server" />
+                                <hr />
+                                <asp:FileUpload onchange="readURL(this);" class="form-group" ID="image_uploader" runat="server" />
                             </div>
                         </div>
                         <!-- row 2 -->
@@ -44,7 +50,6 @@
                                 <label>Book ID</label>
                                 <div class="form-group">
                                     <asp:TextBox CssClass="form-control" ID="txt_bookID" runat="server" placeholder="ID"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="validator_id" runat="server" ControlToValidate="txt_bookID" ErrorMessage="ID is Required!"></asp:RequiredFieldValidator>
                                     <asp:LinkButton class="btn btn-primary" ID="btn_search" runat="server" OnClick="btn_search_Click"><i class="fas fa-check-circle"></i></asp:LinkButton>
                                 </div>
                             </div>
@@ -52,7 +57,6 @@
                                 <label>Book Title</label>
                                 <div class="form-group">
                                     <asp:TextBox CssClass="form-control" ID="txt_title" runat="server" placeholder="Book Title"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="validator_title" runat="server" ControlToValidate="txt_title" ErrorMessage="Title is Required!" ForeColor="Red"></asp:RequiredFieldValidator>
                                 </div>
                             </div>
                         </div>
@@ -77,7 +81,7 @@
                                     <div class="col">
                                         <label>Author Name</label>
                                         <div class="form-group">
-                                            <asp:TextBox CssClass="form-control" ID="txt_author" runat="server" placeholder="Author Name"></asp:TextBox>
+                                            <asp:DropDownList class="form-control" ID="dropdown_author" runat="server"></asp:DropDownList>
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +89,7 @@
                                     <div class="col">
                                         <label>Publisher Name</label>
                                         <div class="form-group">
-                                            <asp:TextBox CssClass="form-control" ID="txt_publisher" runat="server" placeholder="Publisher Name"></asp:TextBox>
+                                            <asp:DropDownList class="form-control" ID="dropdown_publisher" runat="server"></asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -98,7 +102,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label>Genre</label>
-                                <asp:ListBox class="form-control" ID="list_genre" runat="server">
+                                <asp:ListBox class="form-control" ID="list_genre" runat="server" SelectionMode="Multiple" Rows="5">
                                     <asp:ListItem Text="Fantasy" Value="Fantasy" />
                                     <asp:ListItem Text="Fiction" Value="Fiction" />
                                     <asp:ListItem Text="Children’s" Value="Children’s" />
@@ -178,7 +182,7 @@
                             <div class="col">
                                 <label>Book Description</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="txt_bookDescription" runat="server" placeholder="Book Description" TextMode="MultiLine" Rows="2" ReadOnly="true"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="txt_bookDescription" runat="server" placeholder="Book Description" TextMode="MultiLine" Rows="2"></asp:TextBox>
                                     
                                 </div>
                             </div>
