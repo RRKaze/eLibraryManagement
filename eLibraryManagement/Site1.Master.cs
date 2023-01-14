@@ -125,5 +125,15 @@ namespace eLibraryManagement
 
             Response.Redirect("homepage.aspx");
         }
+
+        protected void btn_viewbooks_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("viewbooks.aspx");
+        }
+
+        protected void btn_hello_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("userprofile.aspx");
+        }
     }
 }
