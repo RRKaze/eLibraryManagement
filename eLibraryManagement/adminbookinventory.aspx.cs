@@ -14,10 +14,15 @@ namespace eLibraryManagement
     public partial class adminbookinventory : System.Web.UI.Page
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString; // the connection string to the db, defined in the web.config file
+        string global_filepath;
+        int global_actual_stock, global_current_stock, global_issued_books;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            fillAuthorPushlisherValues();
+            if (!IsPostBack)
+            {
+                fillAuthorPushlisherValues();
+            }
             grid_bookInventory.DataBind();
         }
 
@@ -147,28 +152,43 @@ namespace eLibraryManagement
                 string genres = getAllGenre();
                 string filepath = getFilepath();
 
+                int actual_stock = Convert.ToInt32(txt_actualStock.Text.Trim());
+                int current_stock = Convert.ToInt32(txt_currentStock.Text.Trim());
+
+                if (global_actual_stock != actual_stock)
+                {
+                    if (actual_stock < global_issued_books)
+                    {
+                        Response.Write("<script>alert('Actual Stock value cannot be less than the Issued books');</script>");
+                        return;
+                    }
+                    else
+                    {
+                        current_stock = actual_stock - global_issued_books;
+                        txt_currentStock.Text = "" + current_stock;
+                    }
+                }
+
                 SqlConnection con = new SqlConnection(strcon); // creating a connection to the db
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();//if connection is closed, we open it
                 }
 
-                int currentStock = Int32.Parse(txt_actualStock.Text.Trim()) - Int32.Parse(txt_issuedBooks.Text.Trim());
-
                 SqlCommand cmd = new SqlCommand
                     ("UPDATE book_master_tbl " +
                     "SET book_name='" + txt_title.Text.Trim() + "' " +
                     ", genre='"+ genres + "' " +
-                    ", author_name='" + dropdown_author.SelectedItem.Text + "' " +
-                    ", publisher_name='" + dropdown_publisher.SelectedItem.Text + "' " +
+                    ", author_name='" + dropdown_author.SelectedItem.Value + "' " +
+                    ", publisher_name='" + dropdown_publisher.SelectedItem.Value + "' " +
                     ", publisher_date='" + txt_publishDate.Text.Trim() + "' " +
-                    ", language='" + dropdown_language.SelectedItem.Text + "' " +
+                    ", language='" + dropdown_language.SelectedItem.Value + "' " +
                     ", edition='" + txt_edition.Text.Trim() + "' " +
                     ", book_cost='" + txt_unitCost.Text.Trim() + "' " +
                     ", no_of_pages='" + txt_pages.Text.Trim() + "' " +
                     ", book_description='" + txt_bookDescription.Text.Trim() + "' " +
-                    ", actual_stock='" + txt_actualStock.Text.Trim() + "' " +
-                    ", current_stock='" + currentStock + "' " +
+                    ", actual_stock='" + actual_stock.ToString() + "' " +
+                    ", current_stock='" + current_stock.ToString() + "' " +
                     ", book_img_link='" + filepath + "' " +
                     "WHERE book_id='" + txt_bookID.Text.Trim() + "'; "
                     , con);
@@ -232,19 +252,34 @@ namespace eLibraryManagement
                     {
                         txt_bookID.Text = dr.GetValue(0).ToString().Trim();
                         txt_title.Text = dr.GetValue(1).ToString();
-                        list_genre.Text = dr.GetValue(2).ToString();
-                        dropdown_author.Text = dr.GetValue(3).ToString();
-                        dropdown_publisher.Text = dr.GetValue(4).ToString();
-                        txt_publishDate.Text = dr.GetValue(5).ToString();
-                        dropdown_language.Text = dr.GetValue(6).ToString();
+
+                        string[] genres = dr.GetValue(2).ToString().Trim().Split(',');
+
+                        for (int i = 0; i < genres.Length; i++)
+                        {
+                            for (int j = 0; i < list_genre.Items.Count; j++)
+                            {
+                                if (list_genre.Items[j].ToString() == genres[i])
+                                {
+                                    list_genre.Items[j].Selected = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        dropdown_author.SelectedValue = dr.GetValue(3).ToString();
+                        dropdown_publisher.SelectedValue = dr.GetValue(4).ToString();
+                        txt_publishDate.Text = dr.GetValue(5).ToString().Trim();
+                        dropdown_language.SelectedValue = dr.GetValue(6).ToString();
                         txt_edition.Text = dr.GetValue(7).ToString().Trim();
                         txt_unitCost.Text = dr.GetValue(8).ToString().Trim();
                         txt_pages.Text = dr.GetValue(9).ToString().Trim();
                         txt_bookDescription.Text = dr.GetValue(10).ToString().Trim();
-                        txt_actualStock.Text = dr.GetValue(11).ToString();
-                        txt_currentStock.Text = dr.GetValue(12).ToString();
+                        txt_actualStock.Text = dr.GetValue(11).ToString().Trim();
+                        txt_currentStock.Text = dr.GetValue(12).ToString().Trim();
                         txt_issuedBooks.Text = (Int32.Parse(dr.GetValue(11).ToString()) - Int32.Parse(dr.GetValue(12).ToString())).ToString();
-                        //link_bookimg = dr.GetValue(13).ToString();
+
+                        global_filepath = dr.GetValue(13).ToString();
                     }
                 }
                 else
@@ -327,8 +362,15 @@ namespace eLibraryManagement
         {
             string filepath = "~/imgs/b1.jpg";
             string filename = Path.GetFileName(image_uploader.PostedFile.FileName);
-            image_uploader.SaveAs(Server.MapPath("imgs/" + filename));
-            filepath = "~/imgs/" + filename;
+            if(filename == "" || filename == null)
+            {
+                filepath = global_filepath;
+            }
+            else
+            {
+                image_uploader.SaveAs(Server.MapPath("imgs/" + filename));
+                filepath = "~/imgs/" + filename;
+            }
             return filepath;
         }
     }
